@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "1.0.0",
+  "name": "ghidra-apk-mcp-server",
+  "version": "1.0.0",
+  "description": "Model Context Protocol server providing Ghidra binary analysis and APK reverse engineering capabilities for GitHub agents",
+  "homepage": "https://github.com/MillionthOdin16/GithubGhidra",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MillionthOdin16/GithubGhidra.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "GitHub MCP Team"
+  },
+  "keywords": [
+    "mcp",
+    "ghidra",
+    "apk",
+    "reverse-engineering",
+    "security-analysis",
+    "binary-analysis",
+    "android",
+    "decompilation"
+  ],
+  "capabilities": {
+    "protocol": {
+      "version": "2024-11-05"
+    },
+    "tools": [
+      {
+        "name": "analyze_binary",
+        "description": "Analyze binary files using Ghidra headless analyzer",
+        "category": "reverse-engineering",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "file_path": {
+              "type": "string",
+              "description": "Path to the binary file to analyze"
+            },
+            "project_name": {
+              "type": "string", 
+              "description": "Name for the Ghidra project",
+              "default": "analysis"
+            }
+          },
+          "required": ["file_path"]
+        }
+      },
+      {
+        "name": "analyze_apk",
+        "description": "Analyze Android APK files for security and structure analysis",
+        "category": "mobile-security",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "file_path": {
+              "type": "string",
+              "description": "Path to the APK file to analyze"
+            }
+          },
+          "required": ["file_path"]
+        }
+      },
+      {
+        "name": "upload_file",
+        "description": "Upload files for analysis using base64 encoding",
+        "category": "file-management",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "file_content": {
+              "type": "string",
+              "description": "Base64 encoded file content"
+            },
+            "filename": {
+              "type": "string",
+              "description": "Name of the file"
+            }
+          },
+          "required": ["file_content", "filename"]
+        }
+      },
+      {
+        "name": "get_analysis_status",
+        "description": "Get status of running analyses and available files",
+        "category": "status",
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        }
+      }
+    ],
+    "resources": [
+      {
+        "name": "analysis_results",
+        "description": "Access to Ghidra analysis results and project files",
+        "mimeType": "application/json"
+      }
+    ]
+  },
+  "runtime": {
+    "type": "docker",
+    "image": "ghidra-mcp-server:latest",
+    "command": ["python", "mcp_server.py"],
+    "workingDirectory": "/app",
+    "environment": {
+      "GHIDRA_HOME": "/opt/ghidra",
+      "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
+    },
+    "ports": {
+      "stdio": true
+    }
+  },
+  "deployment": {
+    "github": {
+      "actions": true,
+      "workflows": [
+        ".github/workflows/build.yml",
+        ".github/workflows/deploy.yml"
+      ]
+    },
+    "docker": {
+      "registry": "ghcr.io",
+      "image": "millionodin16/githubghidra/ghidra-mcp-server"
+    }
+  },
+  "support": {
+    "documentation": "https://github.com/MillionthOdin16/GithubGhidra/blob/main/README.md",
+    "issues": "https://github.com/MillionthOdin16/GithubGhidra/issues"
+  }
+}

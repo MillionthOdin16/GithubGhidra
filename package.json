@@ -1,0 +1,75 @@
+{
+  "name": "ghidra-apk-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server for Ghidra and APK analysis on GitHub",
+  "main": "mcp_server.py",
+  "bin": {
+    "ghidra-apk-mcp-server": "./mcp_server.py"
+  },
+  "engines": {
+    "python": ">=3.9"
+  },
+  "mcp": {
+    "server": {
+      "name": "ghidra-apk-analyzer",
+      "version": "1.0.0",
+      "command": "python",
+      "args": ["mcp_server.py"],
+      "description": "Ghidra and APK analysis server for reverse engineering and security analysis",
+      "capabilities": ["tools", "resources"],
+      "tools": [
+        "analyze_binary",
+        "analyze_apk", 
+        "upload_file",
+        "get_analysis_status"
+      ]
+    },
+    "protocol": {
+      "version": "2024-11-05"
+    }
+  },
+  "scripts": {
+    "start": "python3 mcp_server.py",
+    "mcp": "python3 mcp_server.py",
+    "test": "python3 -m pytest tests/",
+    "validate": "python3 validate_mcp.py",
+    "lint": "flake8 mcp_server.py",
+    "format": "black mcp_server.py && isort mcp_server.py",
+    "docker:build": "docker build -t ghidra-mcp-server .",
+    "docker:run": "docker run -p 8000:8000 ghidra-mcp-server",
+    "deploy:staging": "gh workflow run deploy.yml -f environment=staging",
+    "deploy:production": "gh workflow run deploy.yml -f environment=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MillionthOdin16/GithubGhidra.git"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "ghidra", 
+    "apk",
+    "reverse-engineering",
+    "security-analysis",
+    "github",
+    "model-context-protocol",
+    "github-agent",
+    "copilot"
+  ],
+  "author": "GitHub MCP Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MillionthOdin16/GithubGhidra/issues"
+  },
+  "homepage": "https://github.com/MillionthOdin16/GithubGhidra#readme",
+  "files": [
+    "mcp_server.py",
+    ".mcp.json",
+    "mcp-config.json",
+    "mcp-manifest.json",
+    "requirements.txt",
+    "README.md",
+    "MCP_CONFIGURATION.md",
+    "GITHUB_COPILOT_INTEGRATION.md"
+  ]
+}

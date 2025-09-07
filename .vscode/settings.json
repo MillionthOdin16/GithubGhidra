@@ -1,0 +1,21 @@
+{
+  "extensions": {
+    "github.copilot-chat": {
+      "mcp": {
+        "enabled": true,
+        "servers": {
+          "ghidra-apk-analyzer": {
+            "command": "python",
+            "args": ["mcp_server.py"],
+            "env": {
+              "GHIDRA_HOME": "/opt/ghidra",
+              "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
+            },
+            "cwd": "/app",
+            "description": "Ghidra and APK analysis server for reverse engineering and security analysis"
+          }
+        }
+      }
+    }
+  }
+}

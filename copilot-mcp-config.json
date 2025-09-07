@@ -1,0 +1,145 @@
+{
+  "name": "GitHub Copilot MCP Configuration",
+  "description": "Configuration for GitHub Copilot to use the Ghidra APK MCP Server",
+  "version": "1.0.0",
+  "mcp": {
+    "servers": {
+      "ghidra-analyzer": {
+        "name": "Ghidra APK Analyzer",
+        "description": "Reverse engineering and security analysis using Ghidra and APK tools",
+        "command": "python",
+        "args": ["mcp_server.py"],
+        "cwd": "/app",
+        "env": {
+          "GHIDRA_HOME": "/opt/ghidra",
+          "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64",
+          "PYTHONPATH": "/app"
+        },
+        "capabilities": {
+          "tools": true,
+          "resources": true,
+          "stdio": true
+        },
+        "metadata": {
+          "category": "security-analysis",
+          "tags": ["reverse-engineering", "malware-analysis", "apk-analysis", "ghidra"],
+          "documentation": "https://github.com/MillionthOdin16/GithubGhidra/blob/main/MCP_CONFIGURATION.md"
+        }
+      }
+    }
+  },
+  "tools": {
+    "analyze_binary": {
+      "description": "Analyze binary files using Ghidra headless analyzer",
+      "usage": "Use for reverse engineering executables, libraries, and firmware",
+      "examples": [
+        {
+          "description": "Analyze a Windows executable",
+          "input": {
+            "file_path": "/app/tmp/malware.exe",
+            "project_name": "malware_analysis"
+          }
+        },
+        {
+          "description": "Analyze Linux binary",
+          "input": {
+            "file_path": "/app/tmp/binary",
+            "project_name": "linux_analysis"
+          }
+        }
+      ]
+    },
+    "analyze_apk": {
+      "description": "Analyze Android APK files for security assessment",
+      "usage": "Use for mobile app security analysis and malware detection",
+      "examples": [
+        {
+          "description": "Analyze suspicious APK",
+          "input": {
+            "file_path": "/app/tmp/suspicious_app.apk"
+          }
+        }
+      ]
+    },
+    "upload_file": {
+      "description": "Upload files for analysis using base64 encoding",
+      "usage": "Upload binary files or APKs before analysis",
+      "examples": [
+        {
+          "description": "Upload binary file",
+          "input": {
+            "file_content": "base64_encoded_data",
+            "filename": "sample.exe"
+          }
+        }
+      ]
+    },
+    "get_analysis_status": {
+      "description": "Check analysis status and manage files",
+      "usage": "Monitor running analyses and view available files",
+      "examples": [
+        {
+          "description": "Get current status",
+          "input": {}
+        }
+      ]
+    }
+  },
+  "workflows": {
+    "binary_analysis": {
+      "name": "Binary Reverse Engineering",
+      "description": "Complete workflow for analyzing binary files",
+      "steps": [
+        {
+          "tool": "upload_file",
+          "description": "Upload the binary file"
+        },
+        {
+          "tool": "analyze_binary", 
+          "description": "Run Ghidra analysis"
+        },
+        {
+          "tool": "get_analysis_status",
+          "description": "Check analysis results"
+        }
+      ]
+    },
+    "apk_security_analysis": {
+      "name": "APK Security Assessment",
+      "description": "Complete workflow for APK security analysis",
+      "steps": [
+        {
+          "tool": "upload_file",
+          "description": "Upload the APK file"
+        },
+        {
+          "tool": "analyze_apk",
+          "description": "Run APK security analysis"
+        },
+        {
+          "tool": "get_analysis_status", 
+          "description": "Review security findings"
+        }
+      ]
+    }
+  },
+  "integration": {
+    "github_actions": {
+      "enabled": true,
+      "workflows": [
+        ".github/workflows/build.yml",
+        ".github/workflows/deploy.yml"
+      ]
+    },
+    "docker": {
+      "enabled": true,
+      "image": "ghidra-mcp-server:latest"
+    }
+  },
+  "security": {
+    "isolation": "docker_container",
+    "file_size_limit": "100MB",
+    "analysis_timeout": "300s",
+    "rate_limiting": true
+  }
+}

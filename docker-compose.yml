@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  ghidra-mcp-server:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./workspace:/app/workspace
+      - ./projects:/app/projects
+      - ./tmp:/app/tmp
+    environment:
+      - GHIDRA_INSTALL_DIR=/opt/ghidra
+      - JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+    restart: unless-stopped
+    
+  # Optional: Add a reverse proxy for production
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - ghidra-mcp-server
+    profiles:
+      - production
