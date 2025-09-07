@@ -22,7 +22,10 @@ async def validate_mcp_server():
         "MCP_CONFIGURATION.md",
         "mcp_server.py",
         ".mcp.json",
-        "GITHUB_COPILOT_INTEGRATION.md"
+        "GITHUB_COPILOT_INTEGRATION.md",
+        "GITHUB_AGENTS_SETUP.md",
+        "GITHUB_AGENT_TEMPLATES.md",
+        "package.json"
     ]
     
     print("\n📋 Checking configuration files...")
@@ -145,7 +148,42 @@ async def validate_mcp_server():
         print(f"  ❌ Error validating manifest: {e}")
         return False
     
-    # Test server import (basic syntax check)
+    # Validate package.json for npm metadata
+    print("\n📦 Validating package.json for GitHub agents...")
+    try:
+        with open("package.json", "r") as f:
+            package_config = json.load(f)
+        
+        required_package_fields = ["name", "version", "main", "scripts"]
+        for field in required_package_fields:
+            if field in package_config:
+                print(f"  ✅ {field}")
+            else:
+                print(f"  ❌ Missing package.json field: {field}")
+                return False
+        
+        # Check for MCP metadata
+        if "mcp" in package_config:
+            print("  ✅ MCP metadata found in package.json")
+            mcp_meta = package_config["mcp"]
+            if "server" in mcp_meta and "protocol" in mcp_meta:
+                print("    ✅ Server and protocol metadata complete")
+            else:
+                print("    ⚠️  Incomplete MCP metadata")
+        else:
+            print("  ⚠️  No MCP metadata in package.json (optional but recommended)")
+        
+        # Check npm scripts
+        if "scripts" in package_config:
+            scripts = package_config["scripts"]
+            if "start" in scripts:
+                print(f"    ✅ npm start script: {scripts['start']}")
+            if "mcp" in scripts:
+                print(f"    ✅ npm mcp script: {scripts['mcp']}")
+            
+    except Exception as e:
+        print(f"  ❌ Error validating package.json: {e}")
+        return False
     print("\n🐍 Testing server import...")
     try:
         import importlib.util

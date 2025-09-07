@@ -1,34 +1,62 @@
 # GitHub MCP Server for Ghidra and APK Analysis
 
-This repository provides a Model Context Protocol (MCP) server that enables GitHub agents to perform reverse engineering and security analysis using Ghidra and APK analysis tools, all running on GitHub's infrastructure.
+This repository provides a **complete Model Context Protocol (MCP) server** that enables GitHub agents and GitHub Copilot to perform reverse engineering and security analysis using Ghidra and APK analysis tools. Everything is pre-configured for seamless GitHub agent integration.
+
+## 🚀 GitHub Agent Ready
+
+**✅ Complete GitHub Agent Integration**
+- Standard `.mcp.json` configuration for all GitHub agents
+- GitHub Copilot workspace integration via `.vscode/settings.json`
+- npm package with proper MCP metadata
+- Full protocol compliance with MCP 2024-11-05
+- Four production-ready tools: `analyze_binary`, `analyze_apk`, `upload_file`, `get_analysis_status`
 
 ## Features
 
-- **Ghidra Integration**: Headless binary analysis using Ghidra's powerful reverse engineering capabilities
-- **APK Analysis**: Android APK decompilation and security analysis using androguard and AAPT
-- **MCP Protocol**: Full Model Context Protocol support for seamless integration with GitHub agents
-- **GitHub-Native**: Runs entirely on GitHub Actions and containers - no local setup required
-- **Docker-Based**: Containerized deployment with all dependencies pre-installed
+- **🔧 Ghidra Integration**: Headless binary analysis using Ghidra's powerful reverse engineering capabilities
+- **📱 APK Analysis**: Android APK decompilation and security analysis using androguard and AAPT
+- **🤖 GitHub Agent Ready**: Full Model Context Protocol support for seamless GitHub agent integration
+- **☁️ GitHub-Native**: Runs entirely on GitHub Actions and containers - no local setup required
+- **🐳 Docker-Based**: Containerized deployment with all dependencies pre-installed
+- **📚 Complete Documentation**: Everything needed for GitHub agents setup and usage
 
 ## Architecture
 
 ```
-GitHub Agent → MCP Client → MCP Server (Docker) → Ghidra/APK Tools
+GitHub Agent/Copilot → MCP Client → MCP Server (Docker) → Ghidra/APK Tools
 ```
 
 The system consists of:
-1. **MCP Server**: Python-based server implementing the Model Context Protocol
+1. **MCP Server**: Python-based server implementing the Model Context Protocol 2024-11-05
 2. **Ghidra Backend**: Headless Ghidra installation for binary analysis
 3. **APK Analysis Tools**: androguard, AAPT, and other Android analysis utilities
 4. **GitHub Actions**: CI/CD pipeline for building and deploying the server
 
-## Quick Start
+## 🎯 Quick Start for GitHub Agents
 
-### 1. GitHub Copilot Integration
+### Standard GitHub Agent Configuration
 
-To use this MCP server with GitHub Copilot, add the configuration to your workspace:
+Add this to your GitHub agent's MCP configuration:
 
-#### Option A: Workspace Configuration (Recommended)
+```json
+{
+  "mcpServers": {
+    "ghidra-apk-analyzer": {
+      "command": "python",
+      "args": ["mcp_server.py"],
+      "env": {
+        "GHIDRA_HOME": "/opt/ghidra",
+        "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
+      },
+      "cwd": "/app",
+      "description": "Ghidra and APK analysis server for reverse engineering and security analysis"
+    }
+  }
+}
+```
+
+### GitHub Copilot Integration
+
 Create or update `.vscode/settings.json` in your project:
 
 ```json
