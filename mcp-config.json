@@ -1,0 +1,34 @@
+{
+  "mcpServers": {
+    "ghidra-apk-analyzer": {
+      "command": "python",
+      "args": ["mcp_server.py"],
+      "env": {
+        "GHIDRA_HOME": "/opt/ghidra",
+        "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
+      },
+      "cwd": "/app",
+      "description": "Ghidra and APK analysis server for reverse engineering and security analysis",
+      "capabilities": {
+        "tools": [
+          "analyze_binary",
+          "analyze_apk", 
+          "upload_file",
+          "get_analysis_status"
+        ],
+        "resources": [
+          "analysis_results",
+          "project_files"
+        ]
+      },
+      "metadata": {
+        "name": "Ghidra APK MCP Server",
+        "version": "1.0.0",
+        "author": "GitHub MCP Team",
+        "license": "MIT",
+        "repository": "https://github.com/MillionthOdin16/GithubGhidra",
+        "documentation": "https://github.com/MillionthOdin16/GithubGhidra/blob/main/README.md"
+      }
+    }
+  }
+}

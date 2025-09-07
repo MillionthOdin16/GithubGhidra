@@ -2,6 +2,12 @@
 """
 MCP Server for Ghidra and APK Analysis
 Provides reverse engineering capabilities via Model Context Protocol
+
+Server Information:
+- Name: ghidra-apk-mcp-server
+- Version: 1.0.0
+- Protocol: MCP 2024-11-05
+- Capabilities: tools, resources
 """
 
 import asyncio

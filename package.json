@@ -6,6 +6,7 @@
   "scripts": {
     "start": "python3 mcp_server.py",
     "test": "python3 -m pytest tests/",
+    "validate": "python3 validate_mcp.py",
     "lint": "flake8 mcp_server.py",
     "format": "black mcp_server.py && isort mcp_server.py",
     "docker:build": "docker build -t ghidra-mcp-server .",

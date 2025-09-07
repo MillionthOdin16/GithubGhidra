@@ -24,7 +24,28 @@ The system consists of:
 
 ## Quick Start
 
-### 1. Deploy the MCP Server
+### 1. MCP Configuration for GitHub Agents
+
+GitHub agents and Copilot can connect to this server using the following MCP configuration:
+
+```json
+{
+  "mcpServers": {
+    "ghidra-apk-analyzer": {
+      "command": "python",
+      "args": ["mcp_server.py"],
+      "env": {
+        "GHIDRA_HOME": "/opt/ghidra",
+        "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
+      },
+      "cwd": "/app",
+      "description": "Ghidra and APK analysis server for reverse engineering"
+    }
+  }
+}
+```
+
+### 2. Deploy the MCP Server
 
 The server is automatically built and deployed via GitHub Actions:
 
@@ -33,23 +54,23 @@ The server is automatically built and deployed via GitHub Actions:
 gh workflow run deploy.yml -f environment=staging
 ```
 
-### 2. Connect to the MCP Server
+### 3. Connect to the MCP Server
 
-Once deployed, GitHub agents can connect to the MCP server using the standard MCP protocol:
+Once configured, GitHub agents can connect to the MCP server using the standard MCP protocol:
 
 ```python
 import mcp
 
 # Connect to the MCP server
-client = mcp.Client("ghidra-apk-mcp-server")
+client = mcp.Client("ghidra-apk-analyzer")
 await client.connect("stdio", ["python", "mcp_server.py"])
 
 # List available tools
 tools = await client.list_tools()
-print(tools)
+print("Available tools:", [tool.name for tool in tools.tools])
 ```
 
-### 3. Analyze Files
+### 4. Analyze Files
 
 #### Binary Analysis with Ghidra
 ```python
@@ -79,6 +100,16 @@ analysis = await client.call_tool("analyze_apk", {
     "file_path": "/app/tmp/app.apk"
 })
 ```
+
+## MCP Configuration Files
+
+This repository includes comprehensive MCP configuration files:
+
+- **`mcp-config.json`**: Standard MCP server configuration for GitHub agents
+- **`mcp-manifest.json`**: Server manifest with full capability description  
+- **`MCP_CONFIGURATION.md`**: Detailed configuration guide and examples
+
+For detailed setup instructions, see [MCP Configuration Guide](./MCP_CONFIGURATION.md).
 
 ## Available Tools
 
