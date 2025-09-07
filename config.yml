@@ -1,0 +1,48 @@
+# MCP Server Configuration
+server:
+  name: "ghidra-apk-mcp-server"
+  version: "1.0.0"
+  host: "0.0.0.0"
+  port: 8000
+  debug: false
+
+# Ghidra Configuration
+ghidra:
+  install_dir: "/opt/ghidra"
+  analyzer_timeout: 300  # seconds
+  max_file_size: 100  # MB
+  supported_formats:
+    - "PE"
+    - "ELF"
+    - "Mach-O"
+    - "Binary"
+
+# APK Analysis Configuration
+apk:
+  max_file_size: 50  # MB
+  analysis_timeout: 180  # seconds
+  extract_dex: true
+  extract_resources: true
+
+# File Handling
+files:
+  workspace_dir: "/app/workspace"
+  projects_dir: "/app/projects"
+  temp_dir: "/app/tmp"
+  max_files: 10
+  cleanup_after: 3600  # seconds
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "/app/logs/mcp_server.log"
+
+# Security
+security:
+  max_concurrent_analyses: 3
+  rate_limit: 10  # requests per minute
+  allowed_file_types:
+    - "application/octet-stream"
+    - "application/x-executable"
+    - "application/vnd.android.package-archive"

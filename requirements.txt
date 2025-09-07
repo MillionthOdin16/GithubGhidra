@@ -1,0 +1,19 @@
+# MCP Server dependencies
+mcp>=1.0.0
+pydantic>=2.0.0
+uvicorn>=0.20.0
+fastapi>=0.100.0
+
+# Ghidra integration
+jpype1>=1.4.0
+py4j>=0.10.9
+
+# APK analysis
+androguard>=4.0.0
+python-magic>=0.4.27
+
+# Utility packages
+aiofiles>=23.0.0
+httpx>=0.24.0
+click>=8.0.0
+loguru>=0.7.0

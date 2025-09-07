@@ -1,1 +1,53 @@
-#
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+
+# Analysis data
+workspace/
+projects/
+tmp/
+
+# Docker
+*.tar.gz
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Security
+*.key
+*.pem
+secrets.yml
