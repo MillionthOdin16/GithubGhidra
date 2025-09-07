@@ -16,6 +16,7 @@ Add the following configuration to your MCP client setup:
 {
   "mcpServers": {
     "ghidra-apk-analyzer": {
+      "type": "local",
       "command": "python",
       "args": ["mcp_server.py"],
       "env": {
@@ -37,6 +38,7 @@ For containerized deployment:
 {
   "mcpServers": {
     "ghidra-apk-analyzer": {
+      "type": "local",
       "command": "docker",
       "args": [
         "run", "-i", "--rm",

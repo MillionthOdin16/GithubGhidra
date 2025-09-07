@@ -46,6 +46,7 @@ Add this to your MCP client configuration:
 {
   "mcpServers": {
     "ghidra-apk-analyzer": {
+      "type": "local",
       "command": "python",
       "args": ["mcp_server.py"],
       "env": {

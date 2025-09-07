@@ -67,13 +67,18 @@ async def validate_mcp_server():
                 print("  ✅ Ghidra APK analyzer server configured")
                 server_config = config["mcpServers"]["ghidra-apk-analyzer"]
                 
-                required_fields = ["command", "args", "description"]
+                required_fields = ["type", "command", "args", "description"]
                 for field in required_fields:
                     if field in server_config:
                         print(f"    ✅ {field}: {server_config[field]}")
                     else:
                         print(f"    ❌ Missing required field: {field}")
                         return False
+                
+                # Validate type field specifically
+                if server_config.get("type") not in ["local", "http", "sse"]:
+                    print(f"    ❌ Invalid type: {server_config.get('type')}. Must be 'local', 'http', or 'sse'")
+                    return False
             else:
                 print("  ❌ Ghidra APK analyzer not found in configuration")
                 return False
@@ -98,10 +103,16 @@ async def validate_mcp_server():
                 copilot_server = mcp_config["mcpServers"]["ghidra-apk-analyzer"]
                 
                 # Verify essential fields for GitHub Copilot
-                if "command" in copilot_server and "args" in copilot_server:
+                if "type" in copilot_server and "command" in copilot_server and "args" in copilot_server:
+                    print(f"    ✅ Type: {copilot_server['type']}")
                     print(f"    ✅ Command: {copilot_server['command']} {' '.join(copilot_server['args'])}")
+                    
+                    # Validate type field
+                    if copilot_server.get("type") not in ["local", "http", "sse"]:
+                        print(f"    ❌ Invalid type: {copilot_server.get('type')}. Must be 'local', 'http', or 'sse'")
+                        return False
                 else:
-                    print("    ❌ Missing command or args for GitHub Copilot")
+                    print("    ❌ Missing type, command or args for GitHub Copilot")
                     return False
             else:
                 print("  ❌ Ghidra APK analyzer not configured for GitHub Copilot")
@@ -217,6 +228,7 @@ def print_usage_example():
     example_config = {
         "mcpServers": {
             "ghidra-apk-analyzer": {
+                "type": "local",
                 "command": "python",
                 "args": ["mcp_server.py"],
                 "env": {

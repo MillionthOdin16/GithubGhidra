@@ -36,6 +36,7 @@ This document provides examples of how to use the Ghidra APK MCP Server with Git
 {
   "mcpServers": {
     "ghidra-apk-analyzer": {
+      "type": "local",
       "command": "python",
       "args": ["mcp_server.py"],
       "env": {

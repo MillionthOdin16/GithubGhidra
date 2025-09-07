@@ -47,6 +47,7 @@ This MCP server is now **fully configured and documented** for GitHub agents wit
 {
   "mcpServers": {
     "ghidra-apk-analyzer": {
+      "type": "local",
       "command": "python",
       "args": ["mcp_server.py"],
       "env": {

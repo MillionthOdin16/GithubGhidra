@@ -10,6 +10,7 @@ This file provides ready-to-use MCP configuration templates for different GitHub
 {
   "mcpServers": {
     "ghidra-apk-analyzer": {
+      "type": "local",
       "command": "python",
       "args": ["mcp_server.py"],
       "env": {
@@ -55,6 +56,7 @@ This file provides ready-to-use MCP configuration templates for different GitHub
 {
   "mcpServers": {
     "ghidra-apk-analyzer": {
+      "type": "local",
       "command": "docker",
       "args": [
         "run", "-i", "--rm",
@@ -74,6 +76,7 @@ This file provides ready-to-use MCP configuration templates for different GitHub
 {
   "mcpServers": {
     "ghidra-apk-analyzer": {
+      "type": "local",
       "command": "npx",
       "args": ["ghidra-apk-mcp-server"],
       "description": "Ghidra and APK analysis server (npm)"
@@ -143,6 +146,7 @@ jobs:
 {
   "mcpServers": {
     "ghidra-apk-analyzer": {
+      "type": "local",
       "command": "python",
       "args": ["mcp_server.py"],
       "env": {
@@ -163,6 +167,7 @@ jobs:
 {
   "mcpServers": {
     "ghidra-apk-analyzer": {
+      "type": "local",
       "command": "python",
       "args": ["mcp_server.py"],
       "env": {
@@ -185,6 +190,7 @@ jobs:
 {
   "mcpServers": {
     "ghidra-apk-analyzer": {
+      "type": "local",
       "command": "docker",
       "args": [
         "run", "-i", "--rm",
@@ -239,6 +245,7 @@ jobs:
 {
   "mcpServers": {
     "ghidra-apk-analyzer": {
+      "type": "local",
       "command": "python",
       "args": ["mcp_server.py"],
       "env": {

@@ -19,6 +19,7 @@ Add this configuration to your GitHub agent's MCP client:
 {
   "mcpServers": {
     "ghidra-apk-analyzer": {
+      "type": "local",
       "command": "python",
       "args": ["mcp_server.py"],
       "env": {

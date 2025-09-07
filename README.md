@@ -42,6 +42,7 @@ Add this to your GitHub agent's MCP configuration:
 {
   "mcpServers": {
     "ghidra-apk-analyzer": {
+      "type": "local",
       "command": "python",
       "args": ["mcp_server.py"],
       "env": {
@@ -90,6 +91,7 @@ Create `.mcp.json` in your project root:
 {
   "mcpServers": {
     "ghidra-apk-analyzer": {
+      "type": "local",
       "command": "python",
       "args": ["mcp_server.py"],
       "env": {
@@ -98,6 +100,10 @@ Create `.mcp.json` in your project root:
       },
       "cwd": "/app",
       "description": "Ghidra and APK analysis server for reverse engineering"
+    }
+  }
+}
+```
     }
   }
 }
