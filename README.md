@@ -24,9 +24,39 @@ The system consists of:
 
 ## Quick Start
 
-### 1. MCP Configuration for GitHub Agents
+### 1. GitHub Copilot Integration
 
-GitHub agents and Copilot can connect to this server using the following MCP configuration:
+To use this MCP server with GitHub Copilot, add the configuration to your workspace:
+
+#### Option A: Workspace Configuration (Recommended)
+Create or update `.vscode/settings.json` in your project:
+
+```json
+{
+  "extensions": {
+    "github.copilot-chat": {
+      "mcp": {
+        "enabled": true,
+        "servers": {
+          "ghidra-apk-analyzer": {
+            "command": "python",
+            "args": ["mcp_server.py"],
+            "env": {
+              "GHIDRA_HOME": "/opt/ghidra",
+              "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
+            },
+            "cwd": "/app",
+            "description": "Ghidra and APK analysis server for reverse engineering"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+#### Option B: Global MCP Configuration
+Create `.mcp.json` in your project root:
 
 ```json
 {

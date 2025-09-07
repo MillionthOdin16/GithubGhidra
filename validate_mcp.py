@@ -20,7 +20,9 @@ async def validate_mcp_server():
         "mcp-config.json",
         "mcp-manifest.json", 
         "MCP_CONFIGURATION.md",
-        "mcp_server.py"
+        "mcp_server.py",
+        ".mcp.json",
+        "GITHUB_COPILOT_INTEGRATION.md"
     ]
     
     print("\n📋 Checking configuration files...")
@@ -29,7 +31,25 @@ async def validate_mcp_server():
             print(f"  ✅ {config_file}")
         else:
             print(f"  ❌ {config_file} - Missing")
+            if config_file == ".mcp.json":
+                print("    ℹ️  .mcp.json is recommended for GitHub Copilot integration")
             return False
+    
+    # Check GitHub Copilot workspace configuration
+    vscode_settings = Path(".vscode/settings.json")
+    if vscode_settings.exists():
+        print("  ✅ .vscode/settings.json (GitHub Copilot workspace config)")
+        try:
+            with open(vscode_settings, "r") as f:
+                vscode_config = json.load(f)
+            if "extensions" in vscode_config and "github.copilot-chat" in vscode_config["extensions"]:
+                print("    ✅ GitHub Copilot MCP configuration found")
+            else:
+                print("    ⚠️  GitHub Copilot MCP configuration not found in workspace settings")
+        except Exception as e:
+            print(f"    ❌ Error reading .vscode/settings.json: {e}")
+    else:
+        print("  ⚠️  .vscode/settings.json not found (optional for GitHub Copilot)")
     
     # Validate mcp-config.json structure
     print("\n🔧 Validating MCP configuration...")
@@ -60,6 +80,35 @@ async def validate_mcp_server():
             
     except Exception as e:
         print(f"  ❌ Error validating configuration: {e}")
+        return False
+    
+    # Validate .mcp.json for GitHub Copilot
+    print("\n🔧 Validating GitHub Copilot .mcp.json...")
+    try:
+        with open(".mcp.json", "r") as f:
+            mcp_config = json.load(f)
+        
+        if "mcpServers" in mcp_config:
+            print("  ✅ GitHub Copilot MCP configuration valid")
+            if "ghidra-apk-analyzer" in mcp_config["mcpServers"]:
+                print("  ✅ Ghidra APK analyzer configured for GitHub Copilot")
+                copilot_server = mcp_config["mcpServers"]["ghidra-apk-analyzer"]
+                
+                # Verify essential fields for GitHub Copilot
+                if "command" in copilot_server and "args" in copilot_server:
+                    print(f"    ✅ Command: {copilot_server['command']} {' '.join(copilot_server['args'])}")
+                else:
+                    print("    ❌ Missing command or args for GitHub Copilot")
+                    return False
+            else:
+                print("  ❌ Ghidra APK analyzer not configured for GitHub Copilot")
+                return False
+        else:
+            print("  ❌ Invalid .mcp.json format for GitHub Copilot")
+            return False
+            
+    except Exception as e:
+        print(f"  ❌ Error validating .mcp.json: {e}")
         return False
     
     # Validate manifest

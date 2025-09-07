@@ -383,6 +383,8 @@ async def handle_read_resource(uri: str) -> ReadResourceResult:
 async def main():
     """Main entry point"""
     logger.info("Starting Ghidra APK MCP Server...")
+    logger.info("Server capabilities: tools, resources")
+    logger.info("Available tools: analyze_binary, analyze_apk, upload_file, get_analysis_status")
     
     # Run the server
     async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
